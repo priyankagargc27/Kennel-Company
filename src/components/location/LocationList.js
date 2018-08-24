@@ -5,7 +5,7 @@ export default class LocationList  extends Component {
     render() {
         return (
             <div className="location">
-            <h2>Location Name</h2>
+            <h3>Location Name</h3>
             {
             this.props.locations.map(location =>
                     <div id={'location--${location.id}'} key={location.id}>

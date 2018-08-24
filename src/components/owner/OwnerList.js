@@ -5,11 +5,11 @@ export default class OwnerList  extends Component {
     render() {
         return (
             <div className="owner">
-                <h1>Owner List</h1>
+                <h3>Owner List</h3>
                 {
                 this.props.owners.map(owner =>
                     <div id={'owner--${owner.id}'} key={owner.id}>
-                       <h4> {owner.name}</h4>
+                       <h5> {owner.name}</h5>
                     </div>
         )
     }
