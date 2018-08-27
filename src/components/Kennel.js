@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 class Kennel extends Component {
     render() {
         return (
+            
             <React.Fragment>
                 <NavBar />
                 <ApplicationViews />
