@@ -3,7 +3,7 @@
 import React, { Component } from "react"
 import NavBar from "./nav/NavBar"
 import ApplicationViews from "./ApplicationViews"
-
+import App from "../App"
 import "./Kennel.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 
@@ -13,6 +13,7 @@ class Kennel extends Component {
         return (
             
             <React.Fragment>
+                <App/>
                 <NavBar />
                 <ApplicationViews />
             </React.Fragment>

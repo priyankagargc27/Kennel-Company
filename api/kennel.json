@@ -2,19 +2,38 @@
   "employees": [
     {
       "id": 1,
-      "name": "Jessica Younker"
+      "name": "Jessica Younker",
+      "dept": "finance"
     },
     {
       "id": 2,
-      "name": "Jordan Nelson"
+      "name": "Jordan Nelson",
+      "dept": "HR"
     },
     {
       "id": 3,
-      "name": "Zoe LeBlanc"
+      "name": "Zoe LeBlanc",
+      "dept": "Computer Sciencd"
     },
     {
       "id": 4,
-      "name": "Blaise Roberts"
+      "name": "Blaise Roberts",
+      "dept": "Banking"
+    },
+    {
+      "id": 5,
+      "name": "Priyanka",
+      "dept": "IT"
+    },
+    {
+      "name": "hgh",
+      "dept": "hghgh",
+      "id": 6
+    },
+    {
+      "name": "Kauhsal",
+      "dept": "Delivery",
+      "id": 7
     }
   ],
   "locations": [
@@ -27,24 +46,68 @@
       "id": 2,
       "name": "Nashville South",
       "address": "10101 Binary Court"
+    },
+    {
+      "id": 3,
+      "name": "Thompson station",
+      "address": "1000 Brixworth"
+    },
+    {
+      "id": 4,
+      "name": "Franklin",
+      "address": "10102 Champions Circle"
     }
   ],
   "animals": [
     {
-      "id": 1,
-      "name": "Doodles"
-    },
-    {
       "id": 2,
-      "name": "Jack"
+      "name": "Jack",
+      "breed": "doverman"
     },
     {
       "id": 4,
-      "name": "tuffy"
+      "name": "tuffy",
+      "breed": "xyz"
     },
     {
-        "id":5,
-        "name":"Augus"
+      "id": 5,
+      "name": "Augus",
+      "breed": "abc"
+    },
+    {
+      "id": 6,
+      "name": "tuffy",
+      "breed": "asd"
+    },
+    {
+      "name": "abc",
+      "breed": "xyz",
+      "employeeId": 1,
+      "id": 7
+    },
+    {
+      "name": "Meoow",
+      "breed": "Cat",
+      "employeeId": 4,
+      "id": 8
+    },
+    {
+      "name": "abc",
+      "breed": "ghgh",
+      "employeeId": 3,
+      "id": 9
+    },
+    {
+      "name": "Jackie",
+      "breed": "Pitbull",
+      "employeeId": 4,
+      "id": 10
+    },
+    {
+      "name": "bhbh",
+      "breed": "kmklklk",
+      "employeeId": 5,
+      "id": 11
     }
   ],
   "owners": [

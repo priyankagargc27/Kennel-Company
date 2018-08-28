@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './location.css'
 import place from "./location-512.png"
+import {Link} from 'react-router-dom'
 
 
 export default class LocationList  extends Component {
@@ -29,8 +30,10 @@ return (
                 <div className="card-body">
                     <h5 className="card-title">
                         <img src={place} alt="location" className="icon--location" />
-                        {location.name}{location.address}
-                        <a href="button"
+                        {location.name}
+                        <Link className="nav-link" to={`/locations/${location.id}`}>Details</Link>
+
+                        <a href="#"
                             onClick={() => this.props.deleteLocation(location.id)}
                             className="card-link">Delete</a>
                     </h5>
