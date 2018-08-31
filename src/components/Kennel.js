@@ -1,6 +1,7 @@
 
 
 import React, { Component } from "react"
+import Login from "./Login"
 import NavBar from "./nav/NavBar"
 import ApplicationViews from "./ApplicationViews"
 import App from "../App"
@@ -14,6 +15,7 @@ class Kennel extends Component {
             
             <React.Fragment>
                 <App/>
+                <Login />
                 <NavBar />
                 <ApplicationViews />
             </React.Fragment>

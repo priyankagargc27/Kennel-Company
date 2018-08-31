@@ -1,8 +1,12 @@
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from "react-router-dom"
+
 import React, { Component } from "react"
+import Login from './Login'
+
 import AnimalList from './animal/AnimalList'
 import AnimalDetail from './animal/AnimalDetail'
 import AnimalForm from './animal/AnimalForm'
+import AnimalEditForm from './animal/AnimalEditForm'
 import LocationList from './location/LocationList'
 import LocationDetail from './location/LocationDetail'
 import EmployeeList from './employee/EmployeeList'
@@ -19,7 +23,11 @@ import APIManager from "../module/APIManager"
 //import './Animal.css'
 
 
-export default class ApplicationViews extends Component {    // employeesFromAPI = [
+export default class ApplicationViews extends Component {  
+    
+    isAuthenticated = () => localStorage.getItem("credentials") !== null
+
+    // employeesFromAPI = [
     //     { id: 1, name: "Jessica Younker" },
     //     { id: 2, name: "Jordan Nelson" },
     //     { id: 3, name: "Zoe LeBlanc" },
@@ -60,27 +68,60 @@ export default class ApplicationViews extends Component {    // employeesFromAPI
 
 
     componentDidMount() {
-        APIManager.getAllAnimal().then(allAnimals => {
-            this.setState({
-                animals: allAnimals
-            })
-        })
-        APIManager.getAllLocation().then(allLocations => {
-            this.setState({
-                locations: allLocations
-            })
-        })
-        APIManager.getAllEmployee().then(allEmployees => {
-            this.setState({
-                employees: allEmployees
-            })
-        })
-        APIManager.getAllOwner().then(allOwners => {
-            this.setState({
-                owners: allOwners
-            })
-        })
 
+        APIManager.getAll("animals")
+        .then(allAnimal => {
+            this.setState({
+                animals: allAnimal
+            })
+            })
+        
+           
+           
+            .then(()=>{
+                APIManager.getAll("employees")
+                .then(allEmployee => {
+                    this.setState({
+                        employees: allEmployee
+                    })
+                    })
+                     })
+                     
+                     .then(()=>{
+                         APIManager.getAll("locations")
+                         .then(allLocation => {
+                             this.setState({
+                                 locations: allLocation
+                                })
+                            })
+                        })
+                        
+                        .then(()=>{
+                            APIManager.getAll("owners")
+                            .then(allOwner => {
+                                this.setState({
+                                    owners: allOwner
+                                })
+                            })
+        })
+    }
+    //     APIManager.getAllLocation().then(allLocations => {
+    //         this.setState({
+    //             locations: allLocations
+    //         })
+    //     })
+    //     APIManager.getAllEmployee().then(allEmployees => {
+    //         this.setState({
+    //             employees: allEmployees
+    //         })
+    //     })
+    //     APIManager.getAllOwner().then(allOwners => {
+    //         this.setState({
+    //             owners: allOwners
+    //         })
+    //     })
+
+    // }
 
         //     const newState = {}
 
@@ -99,7 +140,6 @@ export default class ApplicationViews extends Component {    // employeesFromAPI
         //         .then(() => this.setState(newState),()=>{
         //             console.log("This state after fetch",this.state)
         //         })
-    }
 
 
     // deleteAnimal = id => {
@@ -115,47 +155,69 @@ export default class ApplicationViews extends Component {    // employeesFromAPI
     // }
 
     //Add the animal to api with the caretaker
-    addAnimal = animal => APIManager.postAnimal(animal)
-        .then(() => APIManager.getAllAnimal())
+    addAnimal = animal => APIManager.post("animals", animal)
+        .then(() => APIManager.getAll("animals"))
         .then(animals => this.setState({
             animals: animals
         }))
 
-    addEmployee = employee => APIManager.postEmployee(employee)
-        .then(() => APIManager.getAllEmployee())
+    addEmployee = employee => APIManager.post("employees",employee)
+        .then(() => APIManager.getAll("employees"))
         .then(employees => this.setState({
             employees: employees
         }))
 
-    EditAnimal = animal => APIManager.EditAnimal(animal)
-        .then(() => APIManager.getAllAnimal())
-        .then(animals => this.setState({
-            animals: animals
-        }))
+
+        EditAnimal = (id, object) => {
+            return APIManager.edit("animals", id, object)
+            .then(() => 
+                APIManager.getAll("animals"))
+            .then(animals =>
+                this.setState({ animals: animals })
+                )
+        }
+
+    // EditAnimal = animal => APIManager.EditAnimal(animal)
+    //     .then(() => APIManager.postAnimal())
+    //     .then(animals => this.setState({
+    //         animals: animals
+    //     }))
 
 
     // deleting the exesting animal
-    deleteAnimal = id => APIManager.removeAndList(id)
+    deleteAnimal = id => APIManager.removeAndList("animals",id)
+    .then(() => {
+        APIManager.getAll("animals")
         .then(animals => this.setState({
             animals: animals
         }))
+    })
 
     //deleting the exsiting location
-    deleteLocation = id => APIManager.removeAndListLocation(id)
+    deleteLocation = id => APIManager.removeAndList("locations",id)
+    .then (() => {
+        APIManager.getAll("locations")
         .then(locations => this.setState({
             locations: locations
         }))
+    })
 
-    deleteEmployee = id => APIManager.removeAndListEmployee(id)
+    deleteEmployee = id => APIManager.removeAndList("employees",id)
+    .then (() => {
+        APIManager.getAll("employees")
         .then(employees => this.setState({
             employees: employees
         }))
+    })
 
 
-    deleteOwner = id => APIManager.removeAndListOwner(id)
+    deleteOwner = id => APIManager.removeAndList("owners",id)
+    .then(() => {
+        APIManager.getAll("owners")
         .then(owners => this.setState({
             owners: owners
         }))
+    })
     // deleteLocation = id => {
     //     fetch(`http://localhost:5002/locations/${id}`, {
     //         method: "DELETE"
@@ -173,6 +235,8 @@ export default class ApplicationViews extends Component {    // employeesFromAPI
         return (
             <React.Fragment>
                 <div className="container">
+                <Route path="/login" component={Login} />
+
                     <Route exact path="/" render={(props) => {
                         return <LocationList deleteLocation={this.deleteLocation} locations={this.state.locations} />
                     }} />
@@ -199,18 +263,36 @@ export default class ApplicationViews extends Component {    // employeesFromAPI
                             employees={this.state.employees} />
                     }} />
 
-                    <Route path="/animals/Edit" render={(props) => {
-                        return <AnimalForm {...props}
+                    <Route path="/animals/Edit/:animalId(\d+)" render={(props) => {
+                        return <AnimalEditForm {...props}
+                            animals={this.state.animals}
                             EditAnimal={this.EditAnimal}
-                            employees={this.state.employees} />
+                             employees={this.state.employees} />
                     }} />
 
-                    <Route exact path="/employees" render={(props) => {
+
+
+
+
+                     <Route path="/employees" render={(props) => {
+               if (this.isAuthenticated()) {
+                  return <EmployeeList 
+                  deleteEmployee={this.deleteEmployee}
+                     employees={this.state.employees} />
+               } else {
+                  return <Redirect to="/login" />
+               }
+            }} />
+
+                    {/* <Route exact path="/employees" render={(props) => {
+                        
                         return <EmployeeList {...props} deleteEmployee={this.deleteEmployee} employees={this.state.employees} />
                     }} />
                     <Route path="/employees/:employeeId(\d+)" render={(props) => {
-                        return <EmployeeDetail {...props} deleteEmployee={this.deleteEmployee} employees={this.state.employees} />
-                    }} />
+                        return <EmployeeDetail {...props} 
+                        deleteEmployee={this.deleteEmployee} 
+                        employees={this.state.employees} />
+                    }} /> */}
 
                     <Route path="/employees/new" render={(props) => {
                         return <EmployeeForm {...props}
