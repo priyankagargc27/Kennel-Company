@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './owner.css'
 import Owner from "./about_icon.png"
 import {Link} from 'react-router-dom'
-
+//comments for owner
 export default class OwnerList  extends Component {
     render() {
         return (
